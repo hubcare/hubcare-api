@@ -17,13 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('code_of_conduct/', include('code_of_conduct.urls')),
-    path('contribution_guide/', include('contribution_guide.urls')),
-    path('issue_template/', include('issue_template.urls')),
-    path('license/', include('license.urls')),
-    path('pull_request_template/', include('pull_request_template.urls')),
-    path('release_note/', include('release_note.urls')),
-    path('readme/', include('readme.urls')),
-    path('description/', include('description.urls')),
+    path('community/admin/', admin.site.urls),
+    path('community/code_of_conduct/', include('code_of_conduct.urls')),
+    path('community/contribution_guide/', include('contribution_guide.urls')),
+    path('community/issue_template/', include('issue_template.urls')),
+    path('community/license/', include('license.urls')),
+    path('community/pull_request_template/', include('pull_request_template.urls')),
+    path('community/release_note/', include('release_note.urls')),
+    path('community/readme/', include('readme.urls')),
+    path('community/description/', include('description.urls')),
 ]

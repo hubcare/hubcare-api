@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('commit_month/', include('commit_month.urls')),
-    path('contributors/', include('contributors.urls')),
+    path('commit/admin/', admin.site.urls),
+    path('commit/commit_month/', include('commit_month.urls')),
+    path('commit/contributors/', include('contributors.urls')),
 ]

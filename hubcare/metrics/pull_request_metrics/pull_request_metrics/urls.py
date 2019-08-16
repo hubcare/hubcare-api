@@ -17,6 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('acceptance_quality/', include('acceptance_quality.urls')),
+    path('pull_request/admin/', admin.site.urls),
+    path('pull_request/acceptance_quality/', include('acceptance_quality.urls')),
 ]
