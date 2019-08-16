@@ -13,6 +13,8 @@ services:
       - URL_ISSUE=https://hubcare.ml/issue/
       - URL_PULL_REQUEST=https://hubcare.ml/pull_request/
       - URL_REPOSITORY=https://hubcare.ml/repository/
+    volumes:
+      - "./hubcare/hubcare_api:/code"
     ports:
       - "8000:8000"
 
@@ -23,6 +25,8 @@ services:
       dockerfile: Dockerfile
     environment:
       - PORT=8001
+    volumes:
+      - "./hubcare/metrics/commit_metrics:/code"
     ports:
       - "8001:8001"
 
@@ -33,6 +37,8 @@ services:
       dockerfile: Dockerfile
     environment:
       - PORT=8002
+    volumes:
+      - "./hubcare/metrics/community_metrics:/code"
     ports:
       - "8002:8002"
 
@@ -43,6 +49,8 @@ services:
       dockerfile: Dockerfile
     environment:
       - PORT=8003
+    volumes:
+      - "./hubcare/metrics/issue_metrics:/code"
     ports:
       - "8003:8003"
 
@@ -53,6 +61,8 @@ services:
       dockerfile: Dockerfile
     environment:
       - PORT=8004
+    volumes:
+      - "./hubcare/metrics/pull_request_metrics:/code"
     ports:
       - "8004:8004"
 
@@ -63,5 +73,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - PORT=8005
+    volumes:
+      - "./hubcare/repository:/code"
     ports:
       - "8005:8005"
