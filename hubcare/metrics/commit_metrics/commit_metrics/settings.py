@@ -26,12 +26,12 @@ SECRET_KEY = 'ol-d)!uwvg0z0v^@mrxtu6s@52l=hbp4$g70-q0@krm3s*r9kd'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'localhost',
     '0.0.0.0',
-    '159.65.44.0',
     '127.0.0.1',
     'hubcare-commit-metrics.herokuapp.com',
-    'localhost',
-    'commit.hubcare.ml'
+    'hubcare.ml',
+    'commit_metrics'
 ]
 
 # Application definition

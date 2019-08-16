@@ -26,12 +26,12 @@ SECRET_KEY = 'fg5@z9trsznb&p7w-8no5k4q@mw1$eq5i_v0@h)szq(_7fn8up'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'localhost',
     '0.0.0.0',
-    '159.65.44.0',
     '127.0.0.1',
     'hubcare-pull-request-metrics.herokuapp.com',
-    'localhost',
-    'pullrequest.hubcare.ml'
+    'hubcare.ml',
+    'pull_request_metrics'
 ]
 # Application definition
 

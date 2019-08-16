@@ -41,3 +41,10 @@ style:
 	sudo docker-compose exec community_metrics pycodestyle .
 	sudo docker-compose exec issue_metrics pycodestyle .
 	sudo docker-compose exec pull_request_metrics pycodestyle .
+
+build_nginx:
+	cp nginx.conf /etc/nginx.conf
+	docker run -d --name=nginx --restart=unless-stopped -p 80:80 -p 443:443 -v /etc/letsencrypt:/etc/letsencrypt -v /etc/nginx.conf:/etc/nginx/conf.d/default.conf --link=hubcare_api --link=issue_metrics --link=commit_metrics --link=community_metrics --link=pull_request_metrics --link=repository --net=hubcare-api_default nginx:1.11
+
+create_certificate:
+	certbot certonly

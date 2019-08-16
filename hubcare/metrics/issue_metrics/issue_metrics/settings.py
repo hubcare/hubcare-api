@@ -26,12 +26,12 @@ SECRET_KEY = 'v=!au)blx1o)+k%&9nfi8qa^q!9yt_$n@c1o0wx9-(_f3k@y)-'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'localhost',
     '0.0.0.0',
-    '159.65.44.0',
     '127.0.0.1',
     'hubcare-issue-metrics.herokuapp.com',
-    'localhost',
-    'issue.hubcare.ml'
+    'hubcare.ml',
+    'issue_metrics'
 ]
 # Application definition
 
