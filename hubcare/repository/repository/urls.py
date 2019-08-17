@@ -19,6 +19,6 @@ from repository.views import RepositoryView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('repository/<str:owner>/<str:repo>/<str:token_auth>/',
+    path('repository/repository/<str:owner>/<str:repo>/<str:token_auth>/',
          RepositoryView.as_view())
 ]
