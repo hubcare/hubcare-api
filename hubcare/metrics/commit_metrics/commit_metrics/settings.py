@@ -31,7 +31,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'hubcare-commit-metrics.herokuapp.com',
     'hubcare.ml',
-    'commit_metrics'
+    'commit-metrics'
 ]
 
 # Application definition
