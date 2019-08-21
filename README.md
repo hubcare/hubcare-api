@@ -1,6 +1,6 @@
 # Hubcare - API
 
-[![build status](https://gitlab.com/cjjcastro/2019-1-hubcare-api/badges/master/pipeline.svg)](https://gitlab.com/cjjcastro/2019-1-hubcare-api/pipelines)
+[![build status](https://gitlab.com/cjjcastro/hubcare-api/badges/master/pipeline.svg)](https://gitlab.com/cjjcastro/hubcare-api/pipelines)
 [![Coverage Status](https://coveralls.io/repos/github/fga-eps-mds/2019.1-hubcare-api/badge.svg?branch=29-setup_ci_pipeline)](https://coveralls.io/github/fga-eps-mds/2019.1-hubcare-api?branch=29-setup_ci_pipeline)
 [![Maintainability](https://api.codeclimate.com/v1/badges/956d64084dec1bc50ad3/maintainability)](https://codeclimate.com/github/fga-eps-mds/2019.1-hubcare-api/maintainability)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/fga-eps-mds/2019.1-hubcare-api.svg)](http://isitmaintained.com/project/fga-eps-mds/2019.1-hubcare-api "Average time to resolve an issue")
@@ -114,7 +114,7 @@ Now, [localhost:8000](localhost:8000) should have a beautyful documentation page
 
 It's set on [GitLab](https://gitlab.com/cjjcastro/2019-1-hubcare-api), so we can use GitLab CI.
 
-## Built With 
+## Built With
 
 [Djago Rest Framework](https://www.django-rest-framework.org/)
 
