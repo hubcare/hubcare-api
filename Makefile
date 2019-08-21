@@ -48,3 +48,9 @@ build_nginx:
 
 create_certificate:
 	certbot certonly
+
+renew_certificate:
+	certbot renew
+
+reload_nginx:
+	docker-compose -f docker-compose.production.yml exec nginx nginx -s reload

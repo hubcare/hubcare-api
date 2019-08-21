@@ -101,3 +101,20 @@ services:
       - "./hubcare/repository:/code"
     ports:
       - "8005:8005"
+
+  nginx:
+    image: nginx:1.15-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt:/etc/letsencrypt
+    links:
+      - "hubcare_api"
+      - "commit-metrics"
+      - "community-metrics"
+      - "issue-metrics"
+      - "pull-request-metrics"
+      - "repository"
