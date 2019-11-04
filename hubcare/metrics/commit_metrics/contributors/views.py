@@ -37,7 +37,6 @@ class DifferentsAuthorsView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, owner, repo, token_auth):
-
         differents_authors_object = DifferentsAuthors.objects.filter(
             owner=owner,
             repo=repo
@@ -48,7 +47,9 @@ class DifferentsAuthorsView(APIView):
                 differents_authors_object[0])
             return Response(serializer.data, status=status.HTTP_200_OK)
 
+        # ERROR: repo with 1 commit returns errors
         differents_authors = self.get_contributors(owner, repo, token_auth)
+        print('oh carai')
 
         differents_authors = DifferentsAuthors.objects.create(
             owner=owner,

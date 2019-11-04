@@ -31,7 +31,6 @@ class CommitMonthView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, owner, repo, token_auth):
-
         commit = CommitMonth.objects.filter(
             owner=owner,
             repo=repo
