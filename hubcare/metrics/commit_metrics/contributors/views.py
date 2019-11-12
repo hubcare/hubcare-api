@@ -9,7 +9,6 @@ from datetime import datetime, timezone, timedelta
 import requests
 import os
 
-
 class DifferentsAuthorsView(APIView):
     '''
         Get the number of different authors from a repo
@@ -47,9 +46,8 @@ class DifferentsAuthorsView(APIView):
                 differents_authors_object[0])
             return Response(serializer.data, status=status.HTTP_200_OK)
 
-        # ERROR: repo with 1 commit returns errors
+        # TODO validate status of get_contributors
         differents_authors = self.get_contributors(owner, repo, token_auth)
-        print('oh carai')
 
         differents_authors = DifferentsAuthors.objects.create(
             owner=owner,
@@ -78,33 +76,61 @@ class DifferentsAuthorsView(APIView):
         username = os.environ['NAME']
         token = os.environ['TOKEN']
 
-        present = datetime.today()
-        days = timedelta(days=DAYS_CONTRIBUTORS)
-        github_request = True
-        authorsCommits = []
-        startTime = datetime.now()
+        page_length = 100
         page_number = 1
-        while github_request:
-            github_request = requests.get(
-                'https://api.github.com/repos/' + owner + '/' + repo +
-                '/commits' + '?&per_page=100?page=' + str(page_number),
-                headers={'Authorization': 'token ' + token_auth})
-            github_data = github_request.json()
-            if (github_request.status_code >= 200 and
-                    github_request.status_code <= 299):
-                for commit in github_data:
-                    commit['commit']['committer']['date'].split('T')[0]
-                    past = datetime.strptime(
-                        commit['commit']['committer']['date'],
-                        "%Y-%m-%dT%H:%M:%SZ")
-                    commitsDay = present - days
-                    if((past > commitsDay)):
-                        authorsCommits.append(commit['commit']['author']
-                                                    ['email'])
-                        if(len(set(authorsCommits)) >= NUMBER_AUTHORS):
-                            return len(set(authorsCommits))
-                    else:
-                        return len(set(authorsCommits))
-            page_number = page_number + 1
+        repo_url = 'https://api.github.com/repos/{}/{}/commits'.format(
+            owner, repo
+        )
+        repo_url += '?per_page=100&page='
+        header = {
+            'Authorization': 'token ' + token_auth
+        }
 
-        return(len(set(authorsCommits)))
+        r = requests.get(repo_url + str(page_number), headers=header)
+        if validate_status(r.status_code):
+            contributors = []
+            commits = r.json()
+            search = True
+            while commits and search:
+                for commit in commits:
+                    date = commit['commit']['committer']['date']
+                    if validate_commit_date(date):
+                        contributor = commit['commit']['author']['name']
+                        contributors.append(contributor)
+                    else:
+                        search = False
+                        break
+
+                if search and len(commits) == page_length:
+                    page_number += 1
+                    r = requests.get(repo_url + str(page_number),
+                                     headers=header)
+                    if validate_status(r.status_code):
+                        commits = r.json()
+                    else:
+                        # TODO status error
+                        search = False
+                else:
+                    return len(set(contributors))
+            return len(set(contributors))
+        else:
+            return 0
+
+
+def validate_status(status):
+    if status >= 200 and status < 300:
+        return True
+    else:
+        return False
+
+
+def validate_commit_date(date):
+    time_now = datetime.now()
+    date = datetime.strptime(date, r'%Y-%m-%dT%H:%M:%SZ')
+    last_days = timedelta(days=DAYS_CONTRIBUTORS)
+
+    time_diff = time_now - date
+    if time_diff < last_days:
+        return True
+    else:
+        return False

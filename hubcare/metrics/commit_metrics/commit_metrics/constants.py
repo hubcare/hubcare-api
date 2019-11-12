@@ -1,9 +1,7 @@
-import os
-
 MAIN_URL = 'https://api.github.com/repos/'
 WEEKLY_COMMITS = '/stats/participation'
 
-DAYS_CONTRIBUTORS = 14
+DAYS_CONTRIBUTORS = 30
 
 '''
 Period of last 4 weeks
