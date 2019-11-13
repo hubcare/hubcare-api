@@ -31,7 +31,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'hubcare-community-metrics.herokuapp.com',
     'hubcare.ml',
-    'community-metrics'
+    'community-metrics',
+    'hubcare.tk'
 ]
 
 # Application definition
