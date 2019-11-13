@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
     'hubcare-api.herokuapp.com',
     'hubcare.ml',
     'repository',
+    'hubcare.tk'
 ]
 
 

@@ -32,7 +32,8 @@ ALLOWED_HOSTS = [
     'hubcare-api.herokuapp.com',
     'localhost',
     'hubcare.ml',
-    'gateway.hubcare.ml'
+    'gateway.hubcare.ml',
+    'hubcare.tk'
 ]
 
 # Application definition
