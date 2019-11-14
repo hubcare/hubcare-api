@@ -1,4 +1,4 @@
-from hubcare_api.constants import *
+from constants import *
 import requests
 import os
 

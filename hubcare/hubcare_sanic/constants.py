@@ -1,10 +1,10 @@
 import os
 
-URL_COMMUNITY = os.environ['URL_COMMUNITY']
-URL_ISSUE = os.environ['URL_ISSUE']
-URL_COMMIT = os.environ['URL_COMMIT']
-URL_PR = os.environ['URL_PULL_REQUEST']
-URL_REPOSITORY = os.environ['URL_REPOSITORY'] + 'repository/'
+URL_COMMIT = "http://0.0.0.0:8001/" # os.environ['URL_COMMIT']
+URL_COMMUNITY = "http://0.0.0.0:8002/" # os.environ['URL_COMMUNITY']
+URL_ISSUE = "http://0.0.0.0:8003/" # os.environ['URL_ISSUE']
+URL_PR = "http://0.0.0.0:8004/" # os.environ['URL_PULL_REQUEST']
+URL_REPOSITORY = "http://0.0.0.0:8005/repository/" # os.environ['URL_REPOSITORY'] + 'repository/'
 
 WEIGHT_RELEASE_NOTE_ACTIVE = 1
 WEIGHT_CONTRIBUTOR_ACTIVE = 1

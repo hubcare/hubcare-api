@@ -1,31 +1,31 @@
 version: "3"
 
 services:
-  hubcare_api:
-    container_name: hubcare_api
-    build:
-      context: ./docker
-      dockerfile: Dockerfile
-      args:
-        NAME: ${NAME}
-        TOKEN: ${TOKEN}
-    environment:
-      - PORT=8000
-      - URL_COMMIT=http://commit-metrics:8001/commit/
-      - URL_COMMUNITY=http://community-metrics:8002/community/
-      - URL_ISSUE=http://issue-metrics:8003/issue/
-      - URL_PULL_REQUEST=http://pull-request-metrics:8004/pull_request/
-      - URL_REPOSITORY=http://repository:8005/repository/
-    volumes:
-      - "./hubcare/hubcare_api:/code"
-    ports:
-      - "8000:8000"
-    links:
-      - "commit-metrics"
-      - "community-metrics"
-      - "issue-metrics"
-      - "pull-request-metrics"
-      - "repository"
+  # hubcare_api:
+  #   container_name: hubcare_api
+  #   build:
+  #     context: ./docker
+  #     dockerfile: Dockerfile
+  #     args:
+  #       NAME: ${NAME}
+  #       TOKEN: ${TOKEN}
+  #   environment:
+  #     - PORT=8000
+  #     - URL_COMMIT=http://commit-metrics:8001/commit/
+  #     - URL_COMMUNITY=http://community-metrics:8002/community/
+  #     - URL_ISSUE=http://issue-metrics:8003/issue/
+  #     - URL_PULL_REQUEST=http://pull-request-metrics:8004/pull_request/
+  #     - URL_REPOSITORY=http://repository:8005/repository/
+  #   volumes:
+  #     - "./hubcare/hubcare_api:/code"
+  #   ports:
+  #     - "8000:8000"
+  #   links:
+  #     - "commit-metrics"
+  #     - "community-metrics"
+  #     - "issue-metrics"
+  #     - "pull-request-metrics"
+  #     - "repository"
 
   commit-metrics:
     container_name: commit-metrics
