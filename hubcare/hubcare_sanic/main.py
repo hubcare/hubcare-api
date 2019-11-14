@@ -1,6 +1,6 @@
-# from django.http import Http404, HttpResponse
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
+#!/usr/bin/python3.7
+# -*- coding: utf-8 -*-
+
 from indicators import active_indicator
 from indicators import welcoming_indicator
 from indicators import support_indicator
@@ -10,6 +10,7 @@ from services import commit_metric
 from services import pull_request_metric
 from constants import URL_REPOSITORY, TOTAL_WEEKS
 import requests
+
 import os
 
 import json
@@ -22,7 +23,6 @@ import asyncio
 
 app = Sanic()
 
-# class HubcareApiView(APIView):
 '''
 This is the main class view of the project, it gets data from a repo
 Input: owner, repo, token_auth
@@ -38,7 +38,8 @@ async def get_indicators(request, owner, repo, token_auth):
     # username = os.environ['NAME']
     # token = os.environ['TOKEN']
 
-    repo_request = requests.get(URL_REPOSITORY + owner + '/' + repo + '/' + token_auth + '/').json()
+    repo_request = requests.get(
+        URL_REPOSITORY + owner + '/' + repo + '/' + token_auth + '/').json()
     response = []
     metrics = {}
 
@@ -47,14 +48,14 @@ async def get_indicators(request, owner, repo, token_auth):
     print('-------------------')
 
     if repo_request['status'] == 0:
-        return Response([response])
+        return sanic_json([response])
     elif repo_request['status'] == 1:
         print('###########INITIAL TIME POST############')
         now = datetime.now()
         print(now)
         print('###################################')
 
-        metrics = get_metric(owner, repo, token_auth, 'post')
+        metrics = await get_metric(owner, repo, token_auth, 'post')
         hubcare_indicators = get_hubcare_indicators(owner, repo,
                                                     token_auth, metrics)
         response = create_response(
@@ -73,14 +74,14 @@ async def get_indicators(request, owner, repo, token_auth):
         print(after)
         print('TOTAL = ', (after-now))
         print('###################################')
-        return Response([response])
+        return sanic_json([response])
     elif repo_request['status'] == 2:
         print('###########INITIAL TIME PUT############')
         now = datetime.now()
         print(now)
         print('#######################################')
 
-        metrics = get_metric(owner, repo, token_auth, 'put')
+        metrics = await get_metric(owner, repo, token_auth, 'put')
         hubcare_indicators = get_hubcare_indicators(owner, repo,
                                                     token_auth, metrics)
         response = create_response(
@@ -105,7 +106,7 @@ async def get_indicators(request, owner, repo, token_auth):
         print(now)
         print('###################################')
 
-        metrics = get_metric(owner, repo, token_auth, 'get')
+        metrics = await get_metric(owner, repo, token_auth, 'get')
         hubcare_indicators = get_hubcare_indicators(owner, repo,
                                                     token_auth, metrics)
 
@@ -123,7 +124,6 @@ async def get_indicators(request, owner, repo, token_auth):
         print('###################################')
 
     return sanic_json([metrics])
-    # return Response([metrics])
 
 
 def create_response(metrics, indicators, commit_graph, pull_request_graph):
@@ -138,14 +138,21 @@ def create_response(metrics, indicators, commit_graph, pull_request_graph):
     return response
 
 
-def get_metric(owner, repo, token_auth, request_type):
-    metrics = issue_metric.get_metric(owner, repo, token_auth, request_type)
-    metrics.update(community_metric.get_metric(owner, repo, token_auth,
-                                               request_type))
-    metrics.update(commit_metric.get_metric(owner, repo, token_auth,
-                                            request_type))
-    metrics.update(pull_request_metric.get_metric(owner, repo, token_auth,
-                                                  request_type))
+async def get_metric(owner, repo, token_auth, request_type):
+
+    metrics_types = [issue_metric, community_metric, commit_metric,
+                     pull_request_metric]
+
+    tasks = []
+    for metric in metrics_types:
+        tasks.append(asyncio.create_task(metric.get_metric(
+            owner, repo, token_auth, request_type)))
+
+    metrics = {}
+
+    res = await asyncio.gather(*tasks)
+    for metric in res:
+        metrics.update(metric)
 
     return metrics
 

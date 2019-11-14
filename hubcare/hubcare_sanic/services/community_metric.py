@@ -18,7 +18,7 @@ class Request():
         return response
 
 
-def get_metric(owner, repo, token_auth, request_type):
+async def get_metric(owner, repo, token_auth, request_type):
 
     r = Request()
     url_code_of_conduct = get_url('code_of_conduct/', owner, repo, token_auth)
