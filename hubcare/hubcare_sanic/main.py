@@ -10,17 +10,17 @@ from services import commit_metric
 from services import pull_request_metric
 from constants import URL_REPOSITORY, TOTAL_WEEKS
 import requests
-import json
 import os
+
+import json
 
 from datetime import datetime, timezone
 
 from sanic import Sanic
-from sanic.response import json
+from sanic.response import json as sanic_json
 import asyncio
 
 app = Sanic()
-
 
 # class HubcareApiView(APIView):
 '''
@@ -29,7 +29,7 @@ Input: owner, repo, token_auth
 Output: indicators
 '''
 @app.route("/hubcare_indicators/<owner:string>/<repo:string>/<token_auth:string>/", methods=["GET"])
-async def get(request, owner, repo, token_auth):
+async def get_indicators(request, owner, repo, token_auth):
     '''
     Getting data from a repo and indicate parameters
     Input: owner, repo, token_auth
@@ -122,7 +122,8 @@ async def get(request, owner, repo, token_auth):
         print('TOTAL = ', (after-now))
         print('###################################')
 
-    return Response([metrics])
+    return sanic_json([metrics])
+    # return Response([metrics])
 
 
 def create_response(metrics, indicators, commit_graph, pull_request_graph):
