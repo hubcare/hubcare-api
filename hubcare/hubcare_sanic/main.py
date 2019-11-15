@@ -1,3 +1,4 @@
+from multiprocessing.pool import ThreadPool
 #!/usr/bin/python3.7
 # -*- coding: utf-8 -*-
 
@@ -55,7 +56,7 @@ async def get_indicators(request, owner, repo, token_auth):
         print(now)
         print('###################################')
 
-        metrics = await get_metric(owner, repo, token_auth, 'post')
+        metrics = get_metric(owner, repo, token_auth, 'post')
         hubcare_indicators = get_hubcare_indicators(owner, repo,
                                                     token_auth, metrics)
         response = create_response(
@@ -81,7 +82,7 @@ async def get_indicators(request, owner, repo, token_auth):
         print(now)
         print('#######################################')
 
-        metrics = await get_metric(owner, repo, token_auth, 'put')
+        metrics = get_metric(owner, repo, token_auth, 'put')
         hubcare_indicators = get_hubcare_indicators(owner, repo,
                                                     token_auth, metrics)
         response = create_response(
@@ -106,7 +107,7 @@ async def get_indicators(request, owner, repo, token_auth):
         print(now)
         print('###################################')
 
-        metrics = await get_metric(owner, repo, token_auth, 'get')
+        metrics = get_metric(owner, repo, token_auth, 'get')
         hubcare_indicators = get_hubcare_indicators(owner, repo,
                                                     token_auth, metrics)
 
@@ -138,21 +139,27 @@ def create_response(metrics, indicators, commit_graph, pull_request_graph):
     return response
 
 
-async def get_metric(owner, repo, token_auth, request_type):
+def get_metric(owner, repo, token_auth, request_type):
 
     metrics_types = [issue_metric, community_metric, commit_metric,
                      pull_request_metric]
 
+    t_pool = ThreadPool(processes=4)
+
     tasks = []
     for metric in metrics_types:
-        tasks.append(asyncio.create_task(metric.get_metric(
-            owner, repo, token_auth, request_type)))
+        tasks.append(t_pool.apply_async(metric.get_metric,
+                                        args=(owner, repo, token_auth, request_type)))
+
+    results = []
+    for task in tasks:
+        results.append(task.get())
+
+    t_pool.terminate()
 
     metrics = {}
-
-    res = await asyncio.gather(*tasks)
-    for metric in res:
-        metrics.update(metric)
+    for result in results:
+        metrics.update(result)
 
     return metrics
 

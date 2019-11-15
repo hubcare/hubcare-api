@@ -18,7 +18,7 @@ class Request():
         return response
 
 
-async def get_metric(owner, repo, token_auth, request_type):
+def get_metric(owner, repo, token_auth, request_type):
 
     r = Request()
     url_acceptance_quality = get_url('acceptance_quality/', owner, repo,

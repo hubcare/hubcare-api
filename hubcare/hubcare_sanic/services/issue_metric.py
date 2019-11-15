@@ -1,4 +1,5 @@
 from constants import *
+from multiprocessing.pool import ThreadPool
 # from request import Request
 
 import requests
@@ -18,7 +19,7 @@ class Request():
         return response
 
 
-async def get_metric(owner, repo, token_auth, request_type):
+def get_metric(owner, repo, token_auth, request_type):
 
     r = Request()
     url_activity = get_url('activity_rate/', owner, repo, token_auth)
@@ -26,18 +27,28 @@ async def get_metric(owner, repo, token_auth, request_type):
     url_good_first_issue = get_url('good_first_issue/', owner, repo,
                                    token_auth)
 
+    t_pool = ThreadPool(processes=3)
+
     if request_type == 'get':
-        activity_rate = r.get(url_activity)
-        help_wanted = r.get(url_help_wanted)
-        good_first_issue = r.get(url_good_first_issue)
+        task_activity_rate = t_pool.apply_async(r.get, args=(url_activity, ))
+        task_help_wanted = t_pool.apply_async(r.get, args=(url_help_wanted, ))
+        task_good_first_issue = t_pool.apply_async(r.get, args=(url_good_first_issue, ))
+
     elif request_type == 'post':
-        activity_rate = r.post(url_activity)
-        help_wanted = r.post(url_help_wanted)
-        good_first_issue = r.post(url_good_first_issue)
+        task_activity_rate = t_pool.apply_async(r.post, args=(url_activity, ))
+        task_help_wanted = t_pool.apply_async(r.post, args=(url_help_wanted, ))
+        task_good_first_issue = t_pool.apply_async(r.post, args=(url_good_first_issue, ))
+
     elif request_type == 'put':
-        activity_rate = r.put(url_activity)
-        help_wanted = r.put(url_help_wanted)
-        good_first_issue = r.put(url_good_first_issue)
+        task_activity_rate = t_pool.apply_async(r.put, args=(url_activity, ))
+        task_help_wanted = t_pool.apply_async(r.put, args=(url_help_wanted, ))
+        task_good_first_issue = t_pool.apply_async(r.put, args=(url_good_first_issue, ))
+
+    activity_rate = task_activity_rate.get()
+    help_wanted = task_help_wanted.get()
+    good_first_issue = task_good_first_issue.get()
+
+    t_pool.terminate()
 
     metric = {
         'activity_rate': activity_rate['activity_rate'],
