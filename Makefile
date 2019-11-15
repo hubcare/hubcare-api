@@ -11,10 +11,10 @@ down:
 test:
 	sudo docker-compose up -d
 	sudo docker-compose exec hubcare_api python manage.py test
-	sudo docker-compose exec commit_metrics python manage.py test
-	sudo docker-compose exec community_metrics python manage.py test
-	sudo docker-compose exec issue_metrics python manage.py test
-	sudo docker-compose exec pull_request_metrics python manage.py test
+	sudo docker-compose exec commit-metrics python manage.py test
+	sudo docker-compose exec community-metrics python manage.py test
+	sudo docker-compose exec issue-metrics python manage.py test
+	sudo docker-compose exec pull-request-metrics python manage.py test
 
 coverage:
 	sudo docker-compose up -d
