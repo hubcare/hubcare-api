@@ -30,4 +30,6 @@ class SupportIndicatorTestCase(TestCase):
                                                          code_cond_int,
                                                          release_note_int,
                                                          issue_act_float)
-        self.assertEqual(ans, expected)
+        # assertAlmostEqual has an additional parameter place which takes the
+        # no of decimal places upto which the number will be rounded of too.
+        self.assertAlmostEqual(ans, expected, places=4)

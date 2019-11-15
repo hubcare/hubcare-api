@@ -14,7 +14,8 @@ class ActiveIndicatorTestCase(TestCase):
     #         self.activity_rate = float(0.00)
 
     @parameterized.expand([
-        (int(False), int(439), int(3819), float(0.44), float(0.00), float(0.488)),
+        (int(False), int(439), int(3819), float(0.44), float(0.00),
+            float(0.488)),
         (int(False), int(0), int(0), float(0.00), float(0.00), float(0.0)),
         (int(True), int(74), int(444), float(0.68), float(0.00), float(0.636)),
     ])
@@ -32,4 +33,7 @@ class ActiveIndicatorTestCase(TestCase):
                                                        commit_week_int,
                                                        pr_qua_float,
                                                        activity_rate)
-        self.assertEqual(ans, expected)
+
+        # assertAlmostEqual has an additional parameter place which takes the
+        # no of decimal places upto which the number will be rounded of too.
+        self.assertAlmostEqual(ans, expected, places=4)
