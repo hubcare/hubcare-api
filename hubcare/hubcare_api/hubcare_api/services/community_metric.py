@@ -1,6 +1,8 @@
 from hubcare_api.constants import *
 from hubcare_api.services.request import Request
 
+from multiprocessing.pool import ThreadPool
+
 
 def get_metric(owner, repo, token_auth, request_type):
 
@@ -16,52 +18,63 @@ def get_metric(owner, repo, token_auth, request_type):
     url_readme = get_url('readme/', owner, repo, token_auth)
     url_description = get_url('description/', owner, repo, token_auth)
 
-    if request_type == 'get':
-        metric = {
-            "code_of_conduct": r.get(url_code_of_conduct)['code_of_conduct'],
-            "contribution_guide": r.get(url_contribution_guide)[
-                'contribution_guide'
-            ],
-            "issue_template": r.get(url_issue_template)['issue_template'],
-            "license": r.get(url_license)['license'],
-            "pull_request_template": r.get(url_pull_request_template)[
-                'pull_request_template'
-            ],
-            "release_note": r.get(url_release_note)['release_note'],
-            "readme": r.get(url_readme)['readme'],
-            "description": r.get(url_description)['description'],
-        }
-    elif request_type == 'post':
-        metric = {
-            "code_of_conduct": r.post(url_code_of_conduct)['code_of_conduct'],
-            "contribution_guide": r.post(url_contribution_guide)[
-                'contribution_guide'
-            ],
-            "issue_template": r.post(url_issue_template)['issue_template'],
-            "license": r.post(url_license)['license'],
-            "pull_request_template": r.post(url_pull_request_template)[
-                'pull_request_template'
-            ],
-            "release_note": r.post(url_release_note)['release_note'],
-            "readme": r.post(url_readme)['readme'],
-            "description": r.post(url_description)['description'],
-        }
-    elif request_type == 'put':
-        metric = {
-            "code_of_conduct": r.put(url_code_of_conduct)['code_of_conduct'],
-            "contribution_guide": r.put(url_contribution_guide)[
-                'contribution_guide'
-            ],
-            "issue_template": r.put(url_issue_template)['issue_template'],
-            "license": r.put(url_license)['license'],
-            "pull_request_template": r.put(url_pull_request_template)[
-                'pull_request_template'
-            ],
-            "release_note": r.put(url_release_note)['release_note'],
-            "readme": r.put(url_readme)['readme'],
-            "description": r.put(url_description)['description'],
-        }
+    t_pool = ThreadPool(processes=8)
 
+    if request_type == 'get':
+        task_cc = t_pool.apply_async(r.get, args=(url_code_of_conduct, ))
+        task_cg = t_pool.apply_async(r.get, args=(url_contribution_guide, ))
+        task_it = t_pool.apply_async(r.get, args=(url_issue_template, ))
+        task_lic = t_pool.apply_async(r.get, args=(url_license, ))
+        task_prt = t_pool.apply_async(r.get, args=(url_pull_request_template, ))
+        task_rn = t_pool.apply_async(r.get, args=(url_release_note, ))
+        task_rm = t_pool.apply_async(r.get, args=(url_readme, ))
+        task_desc = t_pool.apply_async(r.get, args=(url_description, ))
+
+    elif request_type == 'post':
+        task_cc = t_pool.apply_async(r.post, args=(url_code_of_conduct, ))
+        task_cg = t_pool.apply_async(r.post, args=(url_contribution_guide, ))
+        task_it = t_pool.apply_async(r.post, args=(url_issue_template, ))
+        task_lic = t_pool.apply_async(r.post, args=(url_license, ))
+        task_prt = t_pool.apply_async(r.post, args=(url_pull_request_template, ))
+        task_rn = t_pool.apply_async(r.post, args=(url_release_note, ))
+        task_rm = t_pool.apply_async(r.post, args=(url_readme, ))
+        task_desc = t_pool.apply_async(r.post, args=(url_description, ))
+
+    elif request_type == 'put':
+        task_cc = t_pool.apply_async(r.put, args=(url_code_of_conduct, ))
+        task_cg = t_pool.apply_async(r.put, args=(url_contribution_guide, ))
+        task_it = t_pool.apply_async(r.put, args=(url_issue_template, ))
+        task_lic = t_pool.apply_async(r.put, args=(url_license, ))
+        task_prt = t_pool.apply_async(r.put, args=(url_pull_request_template, ))
+        task_rn = t_pool.apply_async(r.put, args=(url_release_note, ))
+        task_rm = t_pool.apply_async(r.put, args=(url_readme, ))
+        task_desc = t_pool.apply_async(r.put, args=(url_description, ))
+
+    cc = task_cc.get()
+    cg = task_cg.get()
+    it = task_it.get()
+    lic = task_lic.get()
+    prt = task_prt.get()
+    rn = task_rn.get()
+    rm = task_rm.get()
+    desc = task_desc.get()
+
+    t_pool.terminate()
+
+    metric = {
+        "code_of_conduct": cc['code_of_conduct'],
+        "contribution_guide": cg[
+            'contribution_guide'
+        ],
+        "issue_template": it['issue_template'],
+        "license": lic['license'],
+        "pull_request_template": prt[
+            'pull_request_template'
+        ],
+        "release_note": rn['release_note'],
+        "readme": rm['readme'],
+        "description": desc['description'],
+    }
     community_metric = {
         'community_metric': metric
     }

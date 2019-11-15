@@ -13,6 +13,7 @@ import requests
 import json
 import os
 
+from multiprocessing.pool import ThreadPool
 
 from datetime import datetime, timezone
 
@@ -128,13 +129,26 @@ def create_response(metrics, indicators, commit_graph, pull_request_graph):
 
 
 def get_metric(owner, repo, token_auth, request_type):
-    metrics = issue_metric.get_metric(owner, repo, token_auth, request_type)
-    metrics.update(community_metric.get_metric(owner, repo, token_auth,
-                                               request_type))
-    metrics.update(commit_metric.get_metric(owner, repo, token_auth,
-                                            request_type))
-    metrics.update(pull_request_metric.get_metric(owner, repo, token_auth,
-                                                  request_type))
+
+    metrics_types = [issue_metric, community_metric, commit_metric,
+                     pull_request_metric]
+
+    t_pool = ThreadPool(processes=4)
+
+    tasks = []
+    for metric in metrics_types:
+        tasks.append(t_pool.apply_async(metric.get_metric,
+                                        args=(owner, repo, token_auth, request_type)))
+
+    results = []
+    for task in tasks:
+        results.append(task.get())
+
+    t_pool.terminate()
+
+    metrics = {}
+    for result in results:
+        metrics.update(result)
 
     return metrics
 
