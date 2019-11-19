@@ -3,7 +3,7 @@ from hubcare_api import views
 import os
 
 
-class CommitGraphTestCase(TestCase):
+class PullGraphTestCase(TestCase):
     def setUp(self):
         self.owner = 'markinlimac'
         self.repo = 'dns_scan'
@@ -15,21 +15,15 @@ class CommitGraphTestCase(TestCase):
                                         self.request_type)
         self.expected = {
                 "x_axis": [
-                    "10 weeks ago",
-                    "9 weeks ago",
-                    "8 weeks ago",
-                    "7 weeks ago",
-                    "6 weeks ago",
-                    "5 weeks ago",
-                    "4 weeks ago",
-                    "3 weeks ago",
-                    "2 weeks ago",
-                    "this week"
+                    "merged_yes",
+                    "merged_no",
+                    "open_yes_new",
+                    "closed_yes",
+                    "open_yes_old",
+                    "closed_no",
+                    "open_no_old"
                 ],
                 "y_axis": [
-                    0,
-                    0,
-                    0,
                     0,
                     0,
                     0,
@@ -40,7 +34,7 @@ class CommitGraphTestCase(TestCase):
                 ]
             }
 
-    def test_commit_graph(self):
+    def test_pull_graph(self):
 
-        ans = views.get_commit_graph(self.metrics)
+        ans = views.get_pull_request_graph(self.metrics)
         self.assertDictEqual(ans, self.expected)
