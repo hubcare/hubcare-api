@@ -9,6 +9,7 @@ from datetime import datetime, timezone, timedelta
 import requests
 import os
 
+
 class DifferentsAuthorsView(APIView):
     '''
         Get the number of different authors from a repo

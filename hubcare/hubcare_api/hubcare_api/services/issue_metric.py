@@ -17,17 +17,25 @@ def get_metric(owner, repo, token_auth, request_type):
     if request_type == 'get':
         task_activity_rate = t_pool.apply_async(r.get, args=(url_activity, ))
         task_help_wanted = t_pool.apply_async(r.get, args=(url_help_wanted, ))
-        task_good_first_issue = t_pool.apply_async(r.get, args=(url_good_first_issue, ))
+        task_good_first_issue = t_pool.apply_async(
+            r.get, args=(url_good_first_issue, )
+        )
 
     elif request_type == 'post':
         task_activity_rate = t_pool.apply_async(r.post, args=(url_activity, ))
-        task_help_wanted = t_pool.apply_async(r.post, args=(url_help_wanted, ))
-        task_good_first_issue = t_pool.apply_async(r.post, args=(url_good_first_issue, ))
+        task_help_wanted = t_pool.apply_async(
+            r.post, args=(url_help_wanted, )
+        )
+        task_good_first_issue = t_pool.apply_async(
+            r.post, args=(url_good_first_issue, )
+        )
 
     elif request_type == 'put':
         task_activity_rate = t_pool.apply_async(r.put, args=(url_activity, ))
         task_help_wanted = t_pool.apply_async(r.put, args=(url_help_wanted, ))
-        task_good_first_issue = t_pool.apply_async(r.put, args=(url_good_first_issue, ))
+        task_good_first_issue = t_pool.apply_async(
+            r.put, args=(url_good_first_issue, )
+        )
 
     activity_rate = task_activity_rate.get()
     help_wanted = task_help_wanted.get()

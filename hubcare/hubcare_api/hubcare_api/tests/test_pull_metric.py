@@ -29,7 +29,7 @@ class PullRequestServiceTestCase(TestCase):
         self
     ):
         ans = pull_request_metric.get_metric(self.owner,
-                                        self.repo,
-                                        self.token_auth,
-                                        self.request_type)
+                                             self.repo,
+                                             self.token_auth,
+                                             self.request_type)
         self.assertAlmostEqual(ans, self.expected)

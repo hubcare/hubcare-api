@@ -8,9 +8,14 @@ from parameterized import parameterized
 class SupportIndicatorTestCase(TestCase):
 
     @parameterized.expand([
-        (int(True), int(True), int(True), int(True), int(True), int(True), float(0.00), float(0.8125)),
-        (int(False), int(False), int(True), int(True), int(False), int(False), float(0.00), float(0.25)),
-        (int(False), int(False), int(False), int(False), int(False), int(False), float(0.00), float(0.0)),
+        (int(True), int(True), int(True), int(True), int(True),
+         int(True), float(0.00), float(0.8125)),
+
+        (int(False), int(False), int(True), int(True), int(False),
+         int(False), float(0.00), float(0.25)),
+
+        (int(False), int(False), int(False), int(False), int(False),
+         int(False), float(0.00), float(0.0)),
     ])
     def test_calculate_support_metric(
         self,

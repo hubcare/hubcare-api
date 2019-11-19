@@ -137,8 +137,10 @@ def get_metric(owner, repo, token_auth, request_type):
 
     tasks = []
     for metric in metrics_types:
-        tasks.append(t_pool.apply_async(metric.get_metric,
-                                        args=(owner, repo, token_auth, request_type)))
+        tasks.append(
+            t_pool.apply_async(metric.get_metric,
+                               args=(owner, repo, token_auth, request_type))
+        )
 
     results = []
     for task in tasks:

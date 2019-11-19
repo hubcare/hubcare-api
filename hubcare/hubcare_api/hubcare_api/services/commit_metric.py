@@ -13,16 +13,28 @@ def get_metric(owner, repo, token_auth, request_type):
     t_pool = ThreadPool(processes=2)
 
     if request_type == 'get':
-        task_url_commit_month = t_pool.apply_async(r.get, args=(url_commit_month, ))
-        task_url_contributors = t_pool.apply_async(r.get, args=(url_contributors, ))
-        
+        task_url_commit_month = t_pool.apply_async(
+            r.get, args=(url_commit_month, )
+        )
+        task_url_contributors = t_pool.apply_async(
+            r.get, args=(url_contributors, )
+        )
+
     elif request_type == 'post':
-        task_url_commit_month = t_pool.apply_async(r.post, args=(url_commit_month, ))
-        task_url_contributors = t_pool.apply_async(r.post, args=(url_contributors, ))
+        task_url_commit_month = t_pool.apply_async(
+            r.post, args=(url_commit_month, )
+        )
+        task_url_contributors = t_pool.apply_async(
+            r.post, args=(url_contributors, )
+        )
 
     elif request_type == 'put':
-        task_url_commit_month = t_pool.apply_async(r.put, args=(url_commit_month, ))
-        task_url_contributors = t_pool.apply_async(r.put, args=(url_contributors, ))
+        task_url_commit_month = t_pool.apply_async(
+            r.put, args=(url_commit_month, )
+        )
+        task_url_contributors = t_pool.apply_async(
+            r.put, args=(url_contributors, )
+        )
 
     response = task_url_commit_month.get()
     dif_authors = task_url_contributors.get()

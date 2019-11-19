@@ -23,7 +23,7 @@ class CommitServiceTestCase(TestCase):
     def test_get_metric(self):
 
         ans = commit_metric.get_metric(self.owner,
-                                        self.repo,
-                                        self.token_auth,
-                                        self.request_type)
+                                       self.repo,
+                                       self.token_auth,
+                                       self.request_type)
         self.assertAlmostEqual(ans, self.expected)
