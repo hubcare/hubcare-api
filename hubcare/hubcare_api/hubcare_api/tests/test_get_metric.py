@@ -61,3 +61,21 @@ class GetMetricsTestCase(TestCase):
                                self.token_auth,
                                self.request_type)
         self.assertDictEqual(ans, self.expected)
+
+    def test_is_empty(self):
+
+        ans = views.get_metric(self.owner,
+                               self.repo,
+                               self.token_auth,
+                               self.request_type)
+        self.assertTrue(ans)
+
+    def test_have_datas(self):
+
+        ans = views.get_metric(self.owner,
+                               self.repo,
+                               self.token_auth,
+                               self.request_type)
+        if 'issue_metric' and 'community_metric' and 'commit_metric' and 'pull_request_metric' in ans:
+            bool = True
+        self.assertTrue(bool)
