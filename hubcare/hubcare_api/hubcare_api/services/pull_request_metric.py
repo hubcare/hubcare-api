@@ -7,7 +7,6 @@ def get_metric(owner, repo, token_auth, request_type):
     r = Request()
     url_acceptance_quality = get_url('acceptance_quality/', owner, repo,
                                      token_auth)
-
     if request_type == 'get':
         metric = r.get(url_acceptance_quality)
     elif request_type == 'post':

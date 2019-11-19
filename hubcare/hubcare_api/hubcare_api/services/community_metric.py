@@ -21,11 +21,13 @@ def get_metric(owner, repo, token_auth, request_type):
     t_pool = ThreadPool(processes=8)
 
     if request_type == 'get':
-        task_cc = t_pool.apply_async(r.get, args=(url_code_of_conduct, ))
+        task_cc = t_pool.apply_async(r.get,
+                                     args=(url_code_of_conduct, ))
         task_cg = t_pool.apply_async(r.get, args=(url_contribution_guide, ))
         task_it = t_pool.apply_async(r.get, args=(url_issue_template, ))
         task_lic = t_pool.apply_async(r.get, args=(url_license, ))
-        task_prt = t_pool.apply_async(r.get, args=(url_pull_request_template, ))
+        task_prt = t_pool.apply_async(r.get,
+                                      args=(url_pull_request_template, ))
         task_rn = t_pool.apply_async(r.get, args=(url_release_note, ))
         task_rm = t_pool.apply_async(r.get, args=(url_readme, ))
         task_desc = t_pool.apply_async(r.get, args=(url_description, ))
@@ -35,7 +37,8 @@ def get_metric(owner, repo, token_auth, request_type):
         task_cg = t_pool.apply_async(r.post, args=(url_contribution_guide, ))
         task_it = t_pool.apply_async(r.post, args=(url_issue_template, ))
         task_lic = t_pool.apply_async(r.post, args=(url_license, ))
-        task_prt = t_pool.apply_async(r.post, args=(url_pull_request_template, ))
+        task_prt = t_pool.apply_async(r.post,
+                                      args=(url_pull_request_template, ))
         task_rn = t_pool.apply_async(r.post, args=(url_release_note, ))
         task_rm = t_pool.apply_async(r.post, args=(url_readme, ))
         task_desc = t_pool.apply_async(r.post, args=(url_description, ))
@@ -45,7 +48,8 @@ def get_metric(owner, repo, token_auth, request_type):
         task_cg = t_pool.apply_async(r.put, args=(url_contribution_guide, ))
         task_it = t_pool.apply_async(r.put, args=(url_issue_template, ))
         task_lic = t_pool.apply_async(r.put, args=(url_license, ))
-        task_prt = t_pool.apply_async(r.put, args=(url_pull_request_template, ))
+        task_prt = t_pool.apply_async(r.put,
+                                      args=(url_pull_request_template, ))
         task_rn = t_pool.apply_async(r.put, args=(url_release_note, ))
         task_rm = t_pool.apply_async(r.put, args=(url_readme, ))
         task_desc = t_pool.apply_async(r.put, args=(url_description, ))

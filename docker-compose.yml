@@ -11,6 +11,7 @@ services:
         TOKEN: ${TOKEN}
     environment:
       - PORT=8000
+      - GIT_AUTH_TOKEN=${GIT_AUTH_TOKEN}
       - URL_COMMIT=http://commit-metrics:8001/commit/
       - URL_COMMUNITY=http://community-metrics:8002/community/
       - URL_ISSUE=http://issue-metrics:8003/issue/

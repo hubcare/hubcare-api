@@ -1,17 +1,15 @@
-from django.test import TestCase
-
 from hubcare_api.services import issue_metric
-
 from parameterized import parameterized
-
+from django.test import TestCase
 import os
+
 
 class IssueServiceTestCase(TestCase):
     def setUp(self):
         self.owner = 'pedro-prp'
         self.repo = 'Buzz-terminal'
-        self.token_auth = str(os.getenv('TOKEN_AUTH_GIT'))
-        self.request_type = 'get'
+        self.token_auth = str(os.getenv('GIT_AUTH_TOKEN'))
+        self.request_type = 'post'
         self.expected = {
                 "issue_metric": {
                     "activity_rate": "0.00",
@@ -27,11 +25,11 @@ class IssueServiceTestCase(TestCase):
                     "good_first_issue_max_rate": "0.40"
                 }
             }
-    def test_get_metric(
-        self
-    ):
+
+    def test_get_metric(self):
+
         ans = issue_metric.get_metric(self.owner,
-                                        self.repo,
-                                        self.token_auth,
-                                        self.request_type)
+                                      self.repo,
+                                      self.token_auth,
+                                      self.request_type)
         self.assertAlmostEqual(ans, self.expected)
