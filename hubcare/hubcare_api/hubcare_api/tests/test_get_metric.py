@@ -1,15 +1,13 @@
 from django.test import TestCase
-
 from hubcare_api import views
-
 import os
 
 class GetMetricsTestCase(TestCase):
     def setUp(self):
         self.owner = 'markinlimac'
         self.repo = 'dns_scan'
-        self.token_auth = str(os.getenv('TOKEN_AUTH_GIT'))
-        self.request_type = 'get'
+        self.token_auth = str(os.getenv('GIT_AUTH_TOKEN'))
+        self.request_type = 'post'
         self.expected = {
                 "issue_metric": {
                     "activity_rate": "0.00",
@@ -55,15 +53,10 @@ class GetMetricsTestCase(TestCase):
                 }
             }
             
-    def test_get_metrics(
-        self
-    ):
+    def test_get_metrics(self):
+        
         ans = views.get_metric(self.owner,
                                         self.repo,
                                         self.token_auth,
                                         self.request_type)
-        print(" ")
-        print(ans)
-        print(self.expected)
-        print(" ")
         self.assertDictEqual(ans, self.expected)

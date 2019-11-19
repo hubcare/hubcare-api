@@ -8,7 +8,7 @@ class PullRequestServiceTestCase(TestCase):
     def setUp(self):
         self.owner = 'pedro-prp'
         self.repo = 'Buzz-terminal'
-        self.token_auth = str(os.getenv('TOKEN_AUTH_GIT'))
+        self.token_auth = str(os.getenv('GIT_AUTH_TOKEN'))
         self.request_type = 'post'
         self.expected = {
                 "pull_request_metric": {
