@@ -49,3 +49,10 @@ class CommitGraphTestCase(TestCase):
 
         ans = views.get_commit_graph(self.metrics)
         self.assertTrue(ans)
+
+    def test_have_datas(self):
+
+        ans = views.get_commit_graph(self.metrics)
+        if 'x_axis' and 'y_axis' in ans:
+            bool = True
+        self.assertTrue(bool)
