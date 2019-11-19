@@ -2,6 +2,7 @@ from django.test import TestCase
 from hubcare_api import views
 import os
 
+
 class GetMetricsTestCase(TestCase):
     def setUp(self):
         self.owner = 'markinlimac'
@@ -40,7 +41,7 @@ class GetMetricsTestCase(TestCase):
                     "differents_authors": 0
                 },
                 "pull_request_metric": {
-                    "acceptance_quality": "0.00", 
+                    "acceptance_quality": "0.00",
                     "categories": {
                         "merged_yes": 0,
                         "merged_no": 0,
@@ -49,12 +50,12 @@ class GetMetricsTestCase(TestCase):
                         "open_yes_old": 0,
                         "closed_no": 0,
                         "open_no_old": 0
-                        }
+                    }
                 }
             }
-            
+
     def test_get_metrics(self):
-        
+
         ans = views.get_metric(self.owner,
                                         self.repo,
                                         self.token_auth,
