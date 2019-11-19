@@ -24,7 +24,15 @@ class GetIndicatorsTestCase(TestCase):
     def test_get_indicators(self):
 
         ans = views.get_hubcare_indicators(self.owner,
-                                        self.repo,
-                                        self.token_auth,
-                                        self.metrics)
+                                           self.repo,
+                                           self.token_auth,
+                                           self.metrics)
         self.assertDictEqual(ans, self.expected)
+
+    def test_is_empty(self):
+
+        ans = views.get_hubcare_indicators(self.owner,
+                                           self.repo,
+                                           self.token_auth,
+                                           self.metrics)
+        self.assertTrue(ans)

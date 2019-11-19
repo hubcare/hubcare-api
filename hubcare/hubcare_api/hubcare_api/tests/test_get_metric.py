@@ -57,7 +57,15 @@ class GetMetricsTestCase(TestCase):
     def test_get_metrics(self):
 
         ans = views.get_metric(self.owner,
-                                        self.repo,
-                                        self.token_auth,
-                                        self.request_type)
+                               self.repo,
+                               self.token_auth,
+                               self.request_type)
         self.assertDictEqual(ans, self.expected)
+
+    def test_is_empty(self):
+
+        ans = views.get_metric(self.owner,
+                               self.repo,
+                               self.token_auth,
+                               self.request_type)
+        self.assertTrue(ans)
