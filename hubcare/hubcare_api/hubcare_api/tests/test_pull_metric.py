@@ -1,17 +1,15 @@
-from django.test import TestCase
-
 from hubcare_api.services import pull_request_metric
-
 from parameterized import parameterized
-
+from django.test import TestCase
 import os
+
 
 class PullRequestServiceTestCase(TestCase):
     def setUp(self):
         self.owner = 'pedro-prp'
         self.repo = 'Buzz-terminal'
         self.token_auth = str(os.getenv('TOKEN_AUTH_GIT'))
-        self.request_type = 'get'
+        self.request_type = 'post'
         self.expected = {
                 "pull_request_metric": {
                     "acceptance_quality": "0.00",
@@ -26,6 +24,7 @@ class PullRequestServiceTestCase(TestCase):
                     }
                 }
             }
+
     def test_get_metric(
         self
     ):
