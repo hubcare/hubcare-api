@@ -31,7 +31,7 @@ class HubcareApiView(APIView):
             Output: indicators
         '''
         username = os.environ['NAME']
-        token = os.environ['TOKEN']
+        token = '5cd15aceecd15c12672cca9f72c14c04a0574ee9'#os.environ['TOKEN']
 
         repo_request = requests.get(URL_REPOSITORY + owner + '/' + repo + '/' +
                                     token_auth + '/').json()
