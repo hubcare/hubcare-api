@@ -18,19 +18,19 @@ test:
 
 coverage:
 	sudo docker-compose up -d
-	sudo docker-compose exec hubcare_api coverage run --source='.' --omit=*/tests/*,*/tests.py,*/migrations/*,*/urls.py,*/settings.py,*/wsgi.py,manage.py manage.py test
+	sudo docker-compose exec hubcare_api coverage run --source='.' --omit=*/migrations/*,*/urls.py,*/settings.py,*/wsgi.py,manage.py manage.py test
 	sudo docker-compose exec hubcare_api coverage report
 
-	sudo docker-compose exec commit-metrics coverage run --source='.' --omit=*/tests/*,*/tests.py,*/migrations/*,*/urls.py,*/settings.py,*/wsgi.py,manage.py manage.py test
+	sudo docker-compose exec commit-metrics coverage run --source='.' --omit=*/migrations/*,*/urls.py,*/settings.py,*/wsgi.py,manage.py manage.py test
 	sudo docker-compose exec commit-metrics coverage report
 
-	sudo docker-compose exec community-metrics coverage run --source='.' --omit=*/tests/*,*/tests.py,*/migrations/*,*/urls.py,*/settings.py,*/wsgi.py,manage.py manage.py test
+	sudo docker-compose exec community-metrics coverage run --source='.' --omit=*/migrations/*,*/urls.py,*/settings.py,*/wsgi.py,manage.py manage.py test
 	sudo docker-compose exec community-metrics coverage report
 
-	sudo docker-compose exec issue-metrics coverage run --source='.' --omit=*/tests/*,*/tests.py,*/migrations/*,*/urls.py,*/settings.py,*/wsgi.py,manage.py manage.py test
+	sudo docker-compose exec issue-metrics coverage run --source='.' --omit=*/migrations/*,*/urls.py,*/settings.py,*/wsgi.py,manage.py manage.py test
 	sudo docker-compose exec issue-metrics coverage report
 
-	sudo docker-compose exec pull-request-metrics coverage run --source='.' --omit=*/tests/*,*/tests.py,*/migrations/*,*/urls.py,*/settings.py,*/wsgi.py,manage.py manage.py test
+	sudo docker-compose exec pull-request-metrics coverage run --source='.' --omit=*/migrations/*,*/urls.py,*/settings.py,*/wsgi.py,manage.py manage.py test
 	sudo docker-compose exec pull-request-metrics coverage report
 	
 style:
